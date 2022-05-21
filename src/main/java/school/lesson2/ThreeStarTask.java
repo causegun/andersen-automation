@@ -1,7 +1,5 @@
 package school.lesson2;
 
-import java.util.Arrays;
-
 public class ThreeStarTask {
     public void moveArrayElements(int[] array, int n) {
         if (n < 0) {

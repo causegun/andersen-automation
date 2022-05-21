@@ -1,7 +1,5 @@
 package school.lesson2;
 
-import java.util.Arrays;
-
 public class FifthTask {
     public void switchDigits(int[] array) {
         for (int i = 0; i < array.length; i++) {
