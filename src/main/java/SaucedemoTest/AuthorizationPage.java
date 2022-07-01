@@ -1,28 +1,34 @@
 package SaucedemoTest;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 public class AuthorizationPage {
-    WebDriver driver;
+    private WebDriver driver;
+
+    @FindBy(id = "user-name")
+    private WebElement usernameInput;
+    @FindBy(id = "password")
+    private WebElement passwordInput;
+    @FindBy(id = "login-button")
+    private WebElement loginButton;
+    @FindBy(xpath = "//h3[contains(@data-test, 'error')]")
+    private WebElement authorizationErrorHeader;
 
     public AuthorizationPage(WebDriver driver) {
         this.driver = driver;
+        PageFactory.initElements(driver, this);
     }
 
-    private final By usernameBy = By.id("user-name");
-    private final By passwordBy = By.id("password");
-    private final By loginButtonBy = By.id("login-button");
-    private final By authorizationErrorHeaderBy = By.xpath("//h3[contains(@data-test, 'error')]");
-
-
     public void loginUser(String username, String password) {
-        driver.findElement(usernameBy).sendKeys(username);
-        driver.findElement(passwordBy).sendKeys(password);
-        driver.findElement(loginButtonBy).click();
+        usernameInput.sendKeys(username);
+        passwordInput.sendKeys(password);
+        loginButton.click();
     }
 
     public String getAuthorizationErrorText() {
-        return driver.findElement(authorizationErrorHeaderBy).getText();
+        return authorizationErrorHeader.getText();
     }
 }

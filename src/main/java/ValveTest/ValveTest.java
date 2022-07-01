@@ -34,4 +34,15 @@ public class ValveTest {
         JobsPage jobsPage = new JobsPage(driver);
         assert jobsPage.isOtherSectionContainsJobNaming("Software Engineering");
     }
+
+    @Test
+    void verifyTitle() {
+        assert driver.getTitle().equals("Valve Corporation");
+    }
+
+    @Test
+    void verifyAboutHeaderText() {
+        JobsPage jobsPage = new JobsPage(driver);
+        assert jobsPage.getAboutHeaderText().equals("We make games, Steam, and hardware. Join us.");
+    }
 }
