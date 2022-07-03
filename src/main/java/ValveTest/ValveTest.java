@@ -10,6 +10,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 public class ValveTest {
     WebDriver driver;
+    JobsPage jobsPage;
 
     @BeforeAll
     static void setup() {
@@ -20,6 +21,7 @@ public class ValveTest {
     void setupTest() {
         driver = new ChromeDriver();
         driver.get("https://www.valvesoftware.com/");
+        jobsPage = new JobsPage(driver);
     }
 
     @AfterEach
@@ -31,7 +33,6 @@ public class ValveTest {
 
     @Test
     void verifyJobIsPresent() {
-        JobsPage jobsPage = new JobsPage(driver);
         assert jobsPage.isOtherSectionContainsJobNaming("Software Engineering");
     }
 
@@ -42,7 +43,6 @@ public class ValveTest {
 
     @Test
     void verifyAboutHeaderText() {
-        JobsPage jobsPage = new JobsPage(driver);
         assert jobsPage.getAboutHeaderText().equals("We make games, Steam, and hardware. Join us.");
     }
 }

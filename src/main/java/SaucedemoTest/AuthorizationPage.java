@@ -8,6 +8,10 @@ import org.openqa.selenium.support.PageFactory;
 public class AuthorizationPage {
     private WebDriver driver;
 
+    public static final String STANDARD_USER_USERNAME = "standard_user";
+    public static final String LOCKED_OUT_USER_USERNAME = "locked_out_user";
+    public static final String PASSWORD_FOR_ALL_USERS = "secret_sauce";
+
     @FindBy(id = "user-name")
     private WebElement usernameInput;
     @FindBy(id = "password")
@@ -22,10 +26,25 @@ public class AuthorizationPage {
         PageFactory.initElements(driver, this);
     }
 
-    public void loginUser(String username, String password) {
+    private void loginUser(String username, String password) {
         usernameInput.sendKeys(username);
         passwordInput.sendKeys(password);
         loginButton.click();
+    }
+
+    public ProductsPage loginValidUser() {
+        loginUser(STANDARD_USER_USERNAME, PASSWORD_FOR_ALL_USERS);
+        return new ProductsPage(driver);
+    }
+
+    public AuthorizationPage loginLockedOutUser() {
+        loginUser(LOCKED_OUT_USER_USERNAME, PASSWORD_FOR_ALL_USERS);
+        return this;
+    }
+
+    public AuthorizationPage unacceptedUsernameLogin() {
+        loginUser("nonstandard_user", PASSWORD_FOR_ALL_USERS);
+        return this;
     }
 
     public String getAuthorizationErrorText() {

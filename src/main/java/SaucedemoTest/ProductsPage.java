@@ -1,38 +1,50 @@
 package SaucedemoTest;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 public class ProductsPage {
-    WebDriver driver;
+    private WebDriver driver;
 
-    private final By burgerMenuButtonBy = By.id("react-burger-menu-btn");
-    private final By logoutLinkBy = By.id("logout_sidebar_link");
-    private final By boltTShirtAddButtonBy = By.id("add-to-cart-sauce-labs-bolt-t-shirt");
-    private final By onesieAddButtonBy = By.id("add-to-cart-sauce-labs-onesie");
-    private final By cartLinkBy = By.className("shopping_cart_link");
+    @FindBy(id = "react-burger-menu-btn")
+    private WebElement burgerMenuButton;
+    @FindBy(id = "logout_sidebar_link")
+    private WebElement logoutLink;
+    @FindBy(id = "add-to-cart-sauce-labs-bolt-t-shirt")
+    private WebElement boltTShirtAddButton;
+    @FindBy(id = "add-to-cart-sauce-labs-onesie")
+    private WebElement onesieAddButton;
+    @FindBy(className = "shopping_cart_link")
+    private WebElement cartLink;
 
     public ProductsPage(WebDriver driver) {
         this.driver = driver;
+        PageFactory.initElements(driver, this);
     }
 
-    public void clickBurgerMenuButton() {
-        driver.findElement(burgerMenuButtonBy).click();
+    public ProductsPage clickBurgerMenuButton() {
+        burgerMenuButton.click();
+        return this;
     }
 
     public boolean isLoggedIn() {
-        return driver.findElements(logoutLinkBy).size() > 0;
+        return logoutLink.isDisplayed();
     }
 
-    public void clickAddBoltTShirt() {
-        driver.findElement(boltTShirtAddButtonBy).click();
+    public ProductsPage clickAddBoltTShirt() {
+        boltTShirtAddButton.click();
+        return this;
     }
 
-    public void clickAddOnesie() {
-        driver.findElement(onesieAddButtonBy).click();
+    public ProductsPage clickAddOnesie() {
+        onesieAddButton.click();
+        return this;
     }
 
-    public void clickCartLink() {
-        driver.findElement(cartLinkBy).click();
+    public CartPage clickCartLink() {
+        cartLink.click();
+        return new CartPage(driver);
     }
 }

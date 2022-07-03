@@ -11,7 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class JobsPage {
-    WebDriver driver;
+    private WebDriver driver;
     @FindBy(xpath = "//a[@href='about']")
     private WebElement aboutHeader;
 
