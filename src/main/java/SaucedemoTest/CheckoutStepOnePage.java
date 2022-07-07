@@ -1,5 +1,6 @@
 package SaucedemoTest;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -22,21 +23,25 @@ public class CheckoutStepOnePage {
         PageFactory.initElements(driver, this);
     }
 
+    @Step("first name entry")
     public CheckoutStepOnePage typeInFirstNameInput(String firstName) {
         firstNameInput.sendKeys(firstName);
         return new CheckoutStepOnePage(driver);
     }
 
+    @Step("last name entry")
     public CheckoutStepOnePage typeInLastNameInput(String lastName) {
         lastNameInput.sendKeys(lastName);
         return new CheckoutStepOnePage(driver);
     }
 
+    @Step("postal code entry")
     public CheckoutStepOnePage typeInPostalCodeInput(String postalCode) {
         postalCodeInput.sendKeys(postalCode);
         return new CheckoutStepOnePage(driver);
     }
 
+    @Step("click \"Continue\" button")
     public CheckoutStepTwoPage clickContinueButton() {
         continueButton.click();
         return new CheckoutStepTwoPage(driver);

@@ -1,16 +1,18 @@
 package SaucedemoTest;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 public class AuthorizationPage {
     private WebDriver driver;
-
-    public static final String STANDARD_USER_USERNAME = "standard_user";
-    public static final String LOCKED_OUT_USER_USERNAME = "locked_out_user";
-    public static final String PASSWORD_FOR_ALL_USERS = "secret_sauce";
 
     @FindBy(id = "user-name")
     private WebElement usernameInput;
@@ -26,27 +28,45 @@ public class AuthorizationPage {
         PageFactory.initElements(driver, this);
     }
 
+    @Step("login")
     private void loginUser(String username, String password) {
         usernameInput.sendKeys(username);
         passwordInput.sendKeys(password);
         loginButton.click();
     }
 
+    private Properties getCredentialsProperties() {
+        Properties properties = new Properties();
+        try (InputStream input = new FileInputStream("src/main/resources/credentials.properties")) {
+            properties.load(input);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return properties;
+    }
+
+    @Step("valid user login")
     public ProductsPage loginValidUser() {
-        loginUser(STANDARD_USER_USERNAME, PASSWORD_FOR_ALL_USERS);
+        Properties properties = getCredentialsProperties();
+        loginUser(properties.getProperty("username.standard_user"), properties.getProperty("password.valid"));
         return new ProductsPage(driver);
     }
 
+    @Step("locked out user login")
     public AuthorizationPage loginLockedOutUser() {
-        loginUser(LOCKED_OUT_USER_USERNAME, PASSWORD_FOR_ALL_USERS);
+        Properties properties = getCredentialsProperties();
+        loginUser(properties.getProperty("username.locked_out_user"), properties.getProperty("password.valid"));
         return this;
     }
 
+    @Step("unaccepted username login")
     public AuthorizationPage unacceptedUsernameLogin() {
-        loginUser("nonstandard_user", PASSWORD_FOR_ALL_USERS);
+        Properties properties = getCredentialsProperties();
+        loginUser("nonstandard_user", properties.getProperty("password.valid"));
         return this;
     }
 
+    @Step("get authorization error text")
     public String getAuthorizationErrorText() {
         return authorizationErrorHeader.getText();
     }

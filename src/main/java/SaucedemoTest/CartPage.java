@@ -1,5 +1,6 @@
 package SaucedemoTest;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -16,6 +17,7 @@ public class CartPage {
         PageFactory.initElements(driver, this);
     }
 
+    @Step("click \"Checkout\" button")
     public CheckoutStepOnePage clickCheckoutButton() {
         checkoutButton.click();
         return new CheckoutStepOnePage(driver);

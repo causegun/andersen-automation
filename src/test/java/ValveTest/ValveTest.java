@@ -1,6 +1,9 @@
 package ValveTest;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,16 +34,22 @@ public class ValveTest {
         }
     }
 
+    @Severity(SeverityLevel.MINOR)
+    @Description("verify job is present")
     @Test
     void verifyJobIsPresent() {
         assert jobsPage.isOtherSectionContainsJobNaming("Software Engineering");
     }
 
+    @Severity(SeverityLevel.MINOR)
+    @Description("verify title")
     @Test
     void verifyTitle() {
         assert driver.getTitle().equals("Valve Corporation");
     }
 
+    @Severity(SeverityLevel.TRIVIAL)
+    @Description("verify title")
     @Test
     void verifyAboutHeaderText() {
         assert jobsPage.getAboutHeaderText().equals("We make games, Steam, and hardware. Join us.");
